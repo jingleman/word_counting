@@ -14,7 +14,7 @@ Finally got this working by simplifying like in
 
 https://medium.com/@divyendu.narayan/visual-studio-code-setup-in-mac-os-to-build-and-debug-c-cmake-projects-45a78b29e49
 
-You may need to disable the CMake Tools (and other) plugin(s) besides the C/C++ one.
+You may need to disable the CMake Tools (and other) extension(s) besides the C/C++ one.
 Then modify the now-added .vscode launch.json to point to the desired target in the
 workspace directory. (No need to Add Folder to Workspace. Just OpenFolder.)
 And add args there if applicable. Then launch using Run --> Start Debugging or
@@ -22,6 +22,13 @@ correponding buttons (top left and bottom left). This works when you run
 cmake -DCMAKE_BUILD_TYPE=Debug and make from outside of VS Code, and hopefully
 will from within too. May want to add preBuild command back into this .json but
 it's ommitted for now.
+
+I haven't found a way to make the CMake Tools Debug button (bottom right) launch the
+existing config or prompt for a new config. It seems to simply hang at llvm --version.
+Can hopefully figure this out by googling or editing CMake Tools extension settings
+someday but for now just remember not to use
+that but instead the two buttons or menu path described above. You can also use fn + F5,
+as indicated in the menu.
 
 
 # Word Counting

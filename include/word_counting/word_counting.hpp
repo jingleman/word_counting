@@ -4,7 +4,7 @@
 
 namespace word_counting {
 
-auto word_counting(int nCharsMin, int nCharsMax) -> int;
+auto word_counting(int nCharsMin, int nCharsMax) -> void;
 
 
 }
