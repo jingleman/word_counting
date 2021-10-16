@@ -1,65 +1,24 @@
-# cmake starter with google test and google benchmark
+
+# word_counting with google test and google benchmark
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-A cross-platform C++11 starter project with google test and google benchmark support. [See this
-project](https://github.com/PhDP/cuda-cmake-gtest-gbench-starter) for a similar template with CUDA
-support.
+See also the following template from which this repo was adapted:
+https://github.com/jingleman/cmake-gtest-gbench-starter
+The README there explains the submodules, organizations, usage, etc.
 
-This project template is using git submodule to include Google Benchmark and Google Test so you
-need either to do
 
-    $ git clone --recursive git@github.com:PhDP/cmake-gtest-gbench-starter.git
+# Word Counting
 
-or
+The purpose of this particular repository is to experiment with basic word counting
+functionality and a simple combinatoric optimization problem inspired by a toy.
 
-    $ git clone git@github.com:PhDP/cmake-gtest-gbench-starter.git
-    $ cd cmake-gtest-gbench-starter
-    $ git submodule init
-    $ git submodule update
+The toy is a set of five consonant-vowel-consonant (CVC) words made out of wooden
+blocks that spin to combine four beginning consonants with four ending consonants (for
+each vowel).
 
-The project compiles a library named nemo (of course: you should change the name, nemo means 'no
-one') and an executable named nemo_exe.
+See also https://docs.google.com/spreadsheets/d/1QRt20rpTCyJyiO0vnKrDAx5-xznL2l8qVX4qDVxbEyg/edit?usp=sharing (not public).
 
-# Organization
-
-* **src** has the source files and the CMakeLists.txt to compile the library and executable.
-* **include** has the header files.
-* **test** has the tests and related CMakeLists.txt.
-* **bench** has the benchmarks and related CMakeLists.txt.
-
-The main CMakeLists.txt file at the root of the project has options and further documentation.
-
-# Build
-[![Build Status](https://travis-ci.org/PhDP/cmake-gtest-gbench-starter.svg?branch=master)](https://travis-ci.org/PhDP/cmake-gtest-gbench-starter)
-
-On Linux/Unix, to build and make the test:
-
-    $ mkdir build && cd $_
-    $ cmake ..
-    $ make
-
-By default, the makefiles will build the library, executable, tests, and benchmarks. The commands
-
-    $ ./test/test_nemo
-    $ ./bench/bench_nemo
-
-will run the tests and benchmarks. And
-
-    $ sudo make install
-
-will install (at least on Linux) the library and executable to your computer's
-path.
-
-On Windows, you can use cmake to generate Visual Studio build files with
-the same 'cmake ..' command.
-
-By default, the project will be built in RELEASE mode, use
-
-    $ cmake .. -DCMAKE_BUILD_TYPE=DEBUG
-
-to build in DEBUG mode.
-
-See the CMakeLists.txt file to see all the options.
 
 # License
 

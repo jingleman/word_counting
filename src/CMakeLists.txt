@@ -1,21 +1,21 @@
+
 # Source files (except the main for the executable):
-set(nemo_src
-  foo.cc
-  bar.cc
-  answer.cc
-  count_primes.cc
+set(word_counting_src
+  word_counting.cpp
 )
 
 # Compile the library
-add_library(${NEMO_LIB_NAME} ${NEMO_LIB_TYPE} ${nemo_src})
+add_library(${WORD_COUNTING_LIB_NAME} ${WORD_COUNTING_LIB_TYPE} ${word_counting_src})
 
 # Compile the executable
-add_executable(nemo_exe main.cc)
+add_executable(word_counting_exe main.cpp)
 
-# Link the executable to the nemo library (and thread/math libs).
-target_link_libraries(nemo_exe ${NEMO_LIB_NAME} ${CMAKE_THREAD_LIBS_INIT} ${MATH_LIBS})
+# Link the executable to the word_counting library (and thread/math libs).
+target_link_libraries(word_counting_exe ${WORD_COUNTING_LIB_NAME} ${CMAKE_THREAD_LIBS_INIT} ${MATH_LIBS})
 
 # How and what to install
-install(TARGETS ${NEMO_LIB_NAME} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
-install(TARGETS nemo_exe RUNTIME DESTINATION bin)
-install(DIRECTORY ../include/nemo DESTINATION include)
+install(TARGETS ${WORD_COUNTING_LIB_NAME} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+install(TARGETS word_counting_exe RUNTIME DESTINATION bin)
+install(DIRECTORY ../include/word_counting DESTINATION include)
+
+
