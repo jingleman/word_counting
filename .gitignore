@@ -16,7 +16,7 @@ build*
 # IDE files:
 *.swp
 .idea
-.vscode
+# .vscode
 
 # Visual Studio files:
 *.vcxproj

@@ -6,6 +6,7 @@
 #include "word_counting/word_counting.hpp"
 
 auto main(int argc, char **argv) -> int {
+  std::cout << "main" << std::endl;
   try {
     if (argc != 3) {
       throw std::runtime_error("Invalid arguments.");
@@ -15,6 +16,7 @@ auto main(int argc, char **argv) -> int {
     std::cerr << "Caught exception: " << e.what() << std::endl;
     return 1;
   }
+  std::cout << "main done" << std::endl;
   return 0;
 }
 
