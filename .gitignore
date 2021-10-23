@@ -17,6 +17,7 @@ build*
 *.swp
 .idea
 # .vscode
+cmake-build-debug
 
 # Visual Studio files:
 *.vcxproj
