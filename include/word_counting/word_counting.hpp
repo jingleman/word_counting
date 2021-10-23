@@ -1,5 +1,5 @@
-#ifndef WORD_COUNTING_FOO_H_
-#define WORD_COUNTING_FOO_H_
+#ifndef WORD_COUNTING_H_
+#define WORD_COUNTING_H_
 
 
 #include <string>
@@ -19,12 +19,12 @@ namespace word_counting {
   
   auto word_counting(const std::string& corpusPath, const std::string& queryPath) -> void;
   
-  std::__1::vector<std::string> load_query(const std::string &path) {
+  std::vector<std::string> load_query(const std::string &path) {
     
     std::ifstream ifs(path);
     if (!ifs) { throw std::invalid_argument("Invalid path " + path); }
   
-    std::__1::vector<std::string> results;
+    std::vector<std::string> results;
     std::string word;
     while (ifs >> word) {
       if (word.empty()) { continue; }
@@ -35,7 +35,7 @@ namespace word_counting {
   }
   
   struct Database {
-    Database(const Database &other, const std::__1::vector<std::string> &queryKeys) {
+    Database(const Database &other, const std::vector<std::string> &queryKeys) {
       for (const auto& key : queryKeys) {
         auto it = other.wc.find(key);
         if (it == other.wc.end()) {
@@ -67,14 +67,14 @@ namespace word_counting {
         ++wc[word];
       }
     }
-    std::__1::vector<std::__1::pair<std::string, size_t>> wordCounts() const {
-      std::__1::vector<std::__1::pair<std::string, size_t>> results;
+    std::vector<std::pair<std::string, size_t>> wordCounts() const {
+      std::vector<std::pair<std::string, size_t>> results;
       for (auto pr: wc) results.emplace_back(pr);
       std::sort(results.begin(), results.end());
       return results;
     }
   private:
-    std::__1::unordered_map<std::string, size_t> wc;
+    std::unordered_map<std::string, size_t> wc;
   };
 }
 
