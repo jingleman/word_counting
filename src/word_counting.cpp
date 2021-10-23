@@ -6,6 +6,7 @@
 #include <iostream>
 #include <map>
 #include <stdexcept>
+#include <sstream>
 #include <string>
 #include <unordered_map>
 
@@ -24,47 +25,51 @@ bool vowel(char c) {  // lower
 }
 
 namespace word_counting {
-
-auto word_counting(int nCharsMin, int nCharsMax, std::string path) -> void {
-
-  unordered_map<string, size_t> wc;
-  ifstream ifs(path);
-  if (!ifs) {throw std::invalid_argument("Invalid path: " + path);}
-  string word;
-  size_t nWords = 0;
-  while (ifs >> word) {
-    if (word.size() < nCharsMin) continue;
-    if (word.empty()) continue;
-    auto cKept = word.begin();
-    for (auto c : word) {
-      if (wanted(c)) {
-        *cKept++ = c;
+  auto word_counting::word_counting(int nCharsMin, int nCharsMax, std::string corpusPath, std::string queryPath) -> void {
+    unordered_map<string, size_t> wc;
+    ifstream ifs(corpusPath);
+    if (!ifs) {throw std::invalid_argument("Invalid corpus: " + corpusPath);}
+    string word;
+    size_t nWords = 0;
+    while (ifs >> word) {
+      if (word.size() < nCharsMin) continue;
+      if (word.empty()) continue;
+      auto cKept = word.begin();
+      for (auto c : word) {
+        if (wanted(c)) {
+          *cKept++ = c;
+        }
+      }
+      word.erase(cKept, word.end());
+      ++nWords;
+      if (word.size() >= nCharsMin &&
+          word.size() <= nCharsMax) {
+        ++wc[word];
       }
     }
-    word.erase(cKept, word.end());
-    ++nWords;
-    if (word.size() >= nCharsMin &&
-        word.size() <= nCharsMax) {
-      ++wc[word];
+    for (auto w : wc) {
+      //cout << w.first << " " << w.second << endl;
     }
-  }
-  for (auto w : wc) {
-    cout << w.first << " " << w.second << endl;
-  }
-
-  {
-    map<string, size_t> query;
-    ifstream blocks("block_cvc_words.txt");
-    string word;
     
-    while (blocks >> word) {
-      query[word] = wc[word]; // non const
-    }
-  
-    for (auto q : query) {
-      cout << "block: " << q.first << " " << q.second << endl;
+    
+    {
+      map<string, size_t> query;
+      ifstream blocks(queryPath);
+      if (!blocks) {
+        std::stringstream ss;
+        ss << "Invalid query path " << queryPath;
+        throw invalid_argument(ss.str());
+      }
+      string word;
+      
+      while (blocks >> word) {
+        query[word] = wc[word]; // non const
+      }
+      
+      for (auto q : query) {
+        cout << "block: " << q.first << " " << q.second << endl;
+      }
     }
   }
-}
 }
 
