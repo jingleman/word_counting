@@ -9,6 +9,7 @@
 #include <sstream>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -20,55 +21,58 @@ bool wanted(char &c) {
   return false;
 }
 
-bool vowel(char c) {  // lower
-  return c == 97 || c == 101 || c == 105 || c == 111 || c == 117;
-}
-
 namespace word_counting {
-  auto word_counting::word_counting(int nCharsMin, int nCharsMax, std::string corpusPath, std::string queryPath) -> void {
-    unordered_map<string, size_t> wc;
-    ifstream ifs(corpusPath);
-    if (!ifs) {throw std::invalid_argument("Invalid corpus: " + corpusPath);}
+  
+  std::vector<std::string> load_query(const std::string &path) {
+    
+    std::ifstream ifs(path);
+    if (!ifs) { throw std::invalid_argument("Invalid path " + path); }
+  
+    std::vector<std::string> results;
     string word;
-    size_t nWords = 0;
     while (ifs >> word) {
-      if (word.size() < nCharsMin) continue;
-      if (word.empty()) continue;
-      auto cKept = word.begin();
-      for (auto c : word) {
-        if (wanted(c)) {
-          *cKept++ = c;
+      if (word.empty()) { continue; }
+      results.push_back(word);
+    }
+    
+    return results;
+  }
+  
+  struct Database {
+    Database(const Database &other, const std::vector<std::string> &queryKeys) {
+      for (const auto& key : queryKeys) {
+        auto it = other.wc.find(key);
+        if (it == other.wc.end()) {
+          wc[key] = 0;
+        } else {
+          wc[key] = it->second;
         }
       }
-      word.erase(cKept, word.end());
-      ++nWords;
-      if (word.size() >= nCharsMin &&
-          word.size() <= nCharsMax) {
+    }
+    explicit Database(const std::string& path) {
+      ifstream ifs(path);
+      if (!ifs) {throw std::invalid_argument("Invalid path " + path);}
+      std::string word;
+      while (ifs >> word) {
+        if (word.empty()) continue;
+        auto cKept = word.begin();
+        for (auto c: word) {
+          if (wanted(c)) {
+            *cKept++ = c;
+          }
+        }
+        word.erase(cKept, word.end());
         ++wc[word];
       }
     }
-    for (auto w : wc) {
-      //cout << w.first << " " << w.second << endl;
-    }
-    
-    
-    {
-      map<string, size_t> query;
-      ifstream blocks(queryPath);
-      if (!blocks) {
-        std::stringstream ss;
-        ss << "Invalid query path " << queryPath;
-        throw invalid_argument(ss.str());
-      }
-      string word;
-      
-      while (blocks >> word) {
-        query[word] = wc[word]; // non const
-      }
-      
-      for (auto q : query) {
-        cout << "block: " << q.first << " " << q.second << endl;
-      }
+    unordered_map<string, size_t> wc;
+  };
+  auto word_counting(const std::string& corpusPath, const std::string& queryPath) -> void {
+    auto corpus = Database(corpusPath);
+    std::vector<std::string> queryKeys = load_query(queryPath);
+    auto queryResults = Database(corpus, queryKeys);
+    for (const auto& q : queryResults.wc) {
+      cout << "block: " << q.first << " " << q.second << endl;
     }
   }
 }

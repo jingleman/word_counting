@@ -7,7 +7,7 @@
 
 namespace word_counting {
   
-  auto word_counting(int nCharsMin, int nCharsMax, std::string corpusPath, std::string queryPath) -> void;
+  auto word_counting(const std::string& corpusPath, const std::string& queryPath) -> void;
   
 }
 
