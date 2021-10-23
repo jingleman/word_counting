@@ -1,17 +1,20 @@
 
 #include "word_counting/word_counting.hpp"
 
+#include <exception>
 #include <fstream>
 #include <iostream>
-#include <unordered_map>
 #include <map>
+#include <stdexcept>
+#include <string>
+#include <unordered_map>
 
 using namespace std;
 
 
 bool wanted(char &c) {
   if (c >= 97 && c <= 122) return true;   // lower case.
-  if (c >= 65 && c <= 90) {c += 32; return true;};  // upper. Could change.
+  if (c >= 65 && c <= 90) {c += 32; return true;}  // upper. Could change.
   if (c == 39 || c == 45)  return true;   // ', -
   return false;
 }
@@ -22,16 +25,14 @@ bool vowel(char c) {  // lower
 
 namespace word_counting {
 
-auto word_counting(int nCharsMin, int nCharsMax) -> void {
+auto word_counting(int nCharsMin, int nCharsMax, std::string path) -> void {
 
   unordered_map<string, size_t> wc;
-  ifstream ifs("in.txt");
+  ifstream ifs(path);
+  if (!ifs) {throw std::invalid_argument("Invalid path: " + path);}
   string word;
   size_t nWords = 0;
-  deque<string> buffer;
   while (ifs >> word) {
-    buffer.push_back(word);
-    if (buffer.size() > 100) buffer.pop_front();
     if (word.size() < nCharsMin) continue;
     if (word.empty()) continue;
     auto cKept = word.begin();
