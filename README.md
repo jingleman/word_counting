@@ -1,4 +1,13 @@
 
+
+# TO DO
+
+1. Combinatoric optimization.
+1. Move class into header.
+1. Update this README.
+1. Fix CLion TODOs inside gtest & benchmark submodules, forking those (including CMake warnings).
+
+
 # word_counting with google test and google benchmark
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
