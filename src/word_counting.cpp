@@ -1,7 +1,7 @@
 
 #include "word_counting/word_counting.hpp"
 
-#include <exception>
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -9,9 +9,8 @@
 #include <sstream>
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include <vector>
-
-using namespace std;
 
 
 bool wanted(char &c) {
@@ -29,7 +28,7 @@ namespace word_counting {
     if (!ifs) { throw std::invalid_argument("Invalid path " + path); }
   
     std::vector<std::string> results;
-    string word;
+    std::string word;
     while (ifs >> word) {
       if (word.empty()) { continue; }
       results.push_back(word);
@@ -50,7 +49,7 @@ namespace word_counting {
       }
     }
     explicit Database(const std::string& path) {
-      ifstream ifs(path);
+      std::ifstream ifs(path);
       if (!ifs) {throw std::invalid_argument("Invalid path " + path);}
       std::string word;
       while (ifs >> word) {
@@ -65,14 +64,21 @@ namespace word_counting {
         ++wc[word];
       }
     }
-    unordered_map<string, size_t> wc;
+    std::vector<std::pair<std::string, size_t>> wordCounts() const {
+      std::vector<std::pair<std::string, size_t>> results;
+      for (auto pr: wc) results.emplace_back(pr);
+      std::sort(results.begin(), results.end());
+      return results;
+    }
+  private:
+    std::unordered_map<std::string, size_t> wc;
   };
   auto word_counting(const std::string& corpusPath, const std::string& queryPath) -> void {
     auto corpus = Database(corpusPath);
     std::vector<std::string> queryKeys = load_query(queryPath);
     auto queryResults = Database(corpus, queryKeys);
-    for (const auto& q : queryResults.wc) {
-      cout << "block: " << q.first << " " << q.second << endl;
+    for (const auto& pr : queryResults.wordCounts()) {
+      std::cout << "block: " << pr.first << " " << pr.second << std::endl;
     }
   }
 }
