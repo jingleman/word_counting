@@ -1,7 +1,7 @@
 
 # Source files (except the main for the executable):
 set(word_counting_src
-  word_counting.cpp
+        load_query.cpp
   database.cpp
 )
 

@@ -1,5 +1,5 @@
 
-#include "word_counting/word_counting.hpp"
+#include "word_counting/load_query.hpp"
 #include "word_counting/database.hpp"
 
 #include <fstream>
@@ -9,16 +9,6 @@
 
 namespace word_counting {
 
-
-auto word_counting(const std::string &corpusPath, const std::string &queryPath)
-    -> void {
-  auto corpus = Database(corpusPath);
-  std::vector<std::string> queryKeys = load_query(queryPath);
-  auto queryResults = Database(corpus, queryKeys);
-  for (const auto &pr : queryResults.wordCounts()) {
-    std::cout << "block: " << pr.first << " " << pr.second << std::endl;
-  }
-}
 
 auto load_query(const std::string &path) -> std::vector<std::string> {
   std::ifstream ifs(path);
