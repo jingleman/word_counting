@@ -13,7 +13,7 @@ endif()
 option(WORD_COUNTING_TEST      "Build tests" ON)
 option(WORD_COUNTING_BENCH     "Build benchmarks" ON)
 option(WORD_COUNTING_STATIC    "Builds a static library instead of a shared one" OFF)
-option(WORD_COUNTING_SANITIZE  "Adds sanitive flags" OFF)
+option(WORD_COUNTING_SANITIZE  "Adds sanitize flags" OFF)
 
 if(WORD_COUNTING_STATIC)
   set(WORD_COUNTING_LIB_NAME word_counting_static)
@@ -25,11 +25,11 @@ endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-find_package(Threads REQUIRED)
-find_package(Boost)
-find_package(Math)
+#find_package(Threads REQUIRED)
+#find_package(Boost)
+#find_package(Math)
 
-include_directories(. include ${Boost_INCLUDE_DIRS})
+include_directories(. include)# ${Boost_INCLUDE_DIRS})
 
 set(CMAKE_CXX_STANDARD 11) # cmake 3.1 supports '98', '11' or '14'. cmake 3.8 or later support '17'.
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
