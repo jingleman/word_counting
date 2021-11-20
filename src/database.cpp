@@ -11,9 +11,8 @@
 
 namespace word_counting {
 
-
-Database::Database(const Database &other, const std::vector<std::string>
-    &queryKeys) {
+Database::Database(const Database &other,
+                   const std::vector<std::string> &queryKeys) {
   for (const auto &key : queryKeys) {
     auto it = other.wc.find(key);
     if (it == other.wc.end()) {

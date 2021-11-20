@@ -9,7 +9,6 @@
 
 namespace word_counting {
 
-
 auto load_query(const std::string &path) -> std::vector<std::string> {
   std::ifstream ifs(path);
   if (!ifs) {

@@ -2,8 +2,8 @@
 # Source files (except the main for the executable):
 set(word_counting_src
         load_query.cpp
-  database.cpp
-)
+        database.cpp
+        )
 
 # Compile the library
 add_library(${WORD_COUNTING_LIB_NAME} ${WORD_COUNTING_LIB_TYPE} ${word_counting_src})

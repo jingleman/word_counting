@@ -1,6 +1,6 @@
 
-#include "word_counting/load_query.hpp"
 #include "word_counting/database.hpp"
+#include "word_counting/load_query.hpp"
 #include <algorithm>
 #include <exception>
 #include <iostream>
@@ -13,12 +13,16 @@ auto main(int argc, char **argv) -> int {
   try {
     if (argc != 3) {
       std::stringstream ss;
-      ss << "usage: " << argv[0] << " " << "<corpus_path>"<< " " << "<query_path>";
+      ss << "usage: " << argv[0] << " "
+         << "<corpus_path>"
+         << " "
+         << "<query_path>";
       throw std::invalid_argument(ss.str());
-    }   // Also check values?
-    
+    } // Also check values?
+
     auto corpus = word_counting::Database(std::string(argv[1]));
-    std::vector<std::string> queryKeys = word_counting::load_query(std::string(argv[2]));
+    std::vector<std::string> queryKeys =
+        word_counting::load_query(std::string(argv[2]));
     auto queryResults = word_counting::Database(corpus, queryKeys);
     auto wordCounts = queryResults.wordCounts();
     auto increasingCount = [](const std::pair<std::string, size_t> &a,
@@ -35,4 +39,3 @@ auto main(int argc, char **argv) -> int {
   }
   return 0;
 }
-
