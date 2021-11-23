@@ -18,6 +18,8 @@ target_link_libraries(driver widget)
 add_executable(any any.cpp)
 add_executable(decltype decltype.cpp)
 add_executable(manipulation manipulation.cpp)
+add_executable(move move.cpp)
+add_executable(pinch pinch.cpp)
 add_executable(variant variant.cpp)
 
 # Link the executable to the word_counting library (and thread/math libs).
