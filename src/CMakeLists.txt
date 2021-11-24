@@ -9,6 +9,7 @@ add_library(${WORD_COUNTING_LIB_NAME} ${WORD_COUNTING_LIB_TYPE} ${word_counting_
 add_executable(word_counting_driver word_counting_driver.cpp)
 
 find_package (Eigen3 3.3 REQUIRED NO_MODULE)
+find_package(Catch2 3 REQUIRED)
 add_library(widget widget.cpp)
 add_executable(driver driver.cpp)
 target_link_libraries(widget Eigen3::Eigen)
@@ -17,6 +18,8 @@ target_link_libraries(driver widget)
 # Snippets adapted from cppreference.com:
 add_executable(any any.cpp)
 add_executable(decltype decltype.cpp)
+add_executable(euler_lagrange euler_lagrange.cpp)
+target_link_libraries(euler_lagrange PRIVATE Catch2::Catch2WithMain)
 add_executable(manipulation manipulation.cpp)
 add_executable(move move.cpp)
 add_executable(pinch pinch.cpp)

@@ -26,10 +26,11 @@ endif()
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 #find_package(Threads REQUIRED)
-#find_package(Boost)
+find_package(Boost REQUIRED)
 #find_package(Math)
+#find_package(catch REQUIRED)
 
-include_directories(. include)# ${Boost_INCLUDE_DIRS})
+include_directories(. include ${Boost_INCLUDE_DIRS} ${CATCH2_INCLUDE_DIRS})
 
 set(CMAKE_CXX_STANDARD 20) # cmake 3.1 supports '98', '11' or '14'. cmake 3.8 or later support '17'.
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
